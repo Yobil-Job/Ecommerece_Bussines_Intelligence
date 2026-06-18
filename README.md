@@ -1,121 +1,105 @@
-# 📊 E-commerce Business Intelligence Portfolio Project
+# E-commerce Business Intelligence Portfolio Project
 
-## Live Demo Link:https://ecommerecebussinesintelligence.streamlit.app/ 
+## Live Demo
+https://ecommerecebussinesintelligence.streamlit.app/
 
-## 🎯 Project Overview
+## Project Overview
 
-A comprehensive **data analysis and machine learning portfolio project** demonstrating advanced skills in business intelligence, data visualization, and predictive analytics using real-world e-commerce data.
+A data analysis and business intelligence project demonstrating skills in data cleaning, exploratory analysis, visualization, and predictive modeling using real-world e-commerce data from Amazon India.
 
-## 📈 Data Analysis & Business Intelligence
+## Data Analysis & Business Intelligence
 
-### 🔍 **Exploratory Data Analysis (EDA)**
-- **Multi-dataset Integration**: Analyzed 7+ CSV files with 128K+ transactions
-- **Data Cleaning Pipeline**: Handled missing values, duplicates, and data type conversions
-- **Statistical Analysis**: Descriptive statistics, correlation analysis, and outlier detection
-- **Data Quality Assessment**: Identified and resolved data integrity issues
+### Exploratory Data Analysis (EDA)
+- **Multi-dataset Exploration**: Examined 7+ CSV files (~128K transactions)
+- **Data Cleaning**: Handled missing values, duplicates, and data type conversions
+- **Statistical Analysis**: Descriptive statistics and correlation analysis
+- **Data Quality Assessment**: Identified data integrity issues across datasets
 
-### 📊 **Key Business Insights Generated**
-- **Revenue Analysis**: Total revenue ₹78.6M with 99.98% profit margin
-- **Customer Segmentation**: B2B vs B2C performance analysis
-- **Geographic Intelligence**: Top-performing states (Maharashtra ₹13.3M, Karnataka ₹10.5M)
-- **Product Performance**: Category analysis (Sets generate 50% of revenue)
-- **Temporal Patterns**: Monthly trends and seasonality identification
-- **Operational Metrics**: 8.8% cancellation rate analysis
+### Key Business Insights
+- **Revenue Analysis**: Total revenue of ₹78.6M across the analysis period
+- **Customer Segmentation**: B2B vs B2C performance comparison
+- **Geographic Distribution**: Top-performing states (Maharashtra ₹13.3M, Karnataka ₹10.5M)
+- **Product Performance**: Category analysis showing Sets as the top revenue driver
+- **Temporal Patterns**: Monthly revenue trends and seasonality
+- **Operational Metrics**: ~8.8% cancellation rate analysis
 
-### 🎯 **KPI Development**
-- **Executive Dashboards**: Revenue, Orders, AOV, Cancellation Rate
-- **Growth Metrics**: Month-over-month growth analysis
-- **Customer Analytics**: RFM analysis framework
-- **Inventory Insights**: Stock turnover analysis
+### KPI Development
+- **Executive Dashboards**: Revenue, Orders, AOV, Cancellation Rate tracking
+- **Growth Metrics**: Month-over-month revenue growth analysis
+- **Customer Analytics**: B2B/B2C segmentation
 
-## 🤖 Machine Learning & Predictive Analytics
+## Machine Learning & Predictive Analytics
 
-### 📈 **Predictive Modeling**
-- **Linear Regression Model**: Revenue prediction based on temporal and quantity features
-- **Feature Engineering**: Month extraction, revenue calculations, data preprocessing
-- **Model Evaluation**: Performance metrics and validation
-- **Interactive Prediction**: Real-time revenue forecasting interface
+### Predictive Modeling
+- **Order Cancellation Classifier**: Logistic Regression model to predict whether an order is likely to be cancelled
+- **Feature Engineering**: Temporal features (month, day of week), categorical encoding, and business features
+- **Model Evaluation**: Accuracy, precision, recall, F1-score, and ROC-AUC metrics with train/test validation
+- **Business Application**: Early identification of at-risk orders for intervention
 
-### 🔧 **ML Pipeline Development**
-- **Data Preprocessing**: Feature selection, missing value handling
-- **Model Training**: Supervised learning with scikit-learn
-- **Performance Metrics**: R² score, MSE evaluation
-- **Deployment**: Interactive web-based prediction interface
+### ML Pipeline
+- **Data Preprocessing**: Feature selection, encoding, and scaling
+- **Model Training**: Supervised classification with scikit-learn
+- **Performance Metrics**: Full classification report with cross-validation
+- **Interactive Interface**: Real-time cancellation risk prediction
 
-## 📊 Data Visualization Expertise
+## Data Visualization
 
-### 🎨 **Advanced Visualizations**
+### Visualizations
 - **Time Series Analysis**: Monthly revenue trends with growth rates
-- **Geographic Mapping**: State-wise performance heatmaps
-- **Categorical Analysis**: Top products and categories visualization
-- **Statistical Plots**: Distribution analysis, correlation heatmaps
-- **Interactive Dashboards**: Real-time filtering and exploration
+- **Geographic Analysis**: State-wise revenue distribution
+- **Categorical Analysis**: Top products, categories, and order status distributions
+- **Interactive Dashboards**: Real-time filtering with Streamlit
 
-### 🛠️ **Technologies & Tools**
-- **Visualization Libraries**: Matplotlib, Seaborn, Plotly
-- **Interactive Charts**: Dynamic filtering, hover effects, animations
-- **Dashboard Design**: User-friendly interface with multiple views
-- **Storytelling**: Data narrative for business stakeholders
+### Technologies & Tools
+- **Libraries**: Pandas, NumPy, Scikit-learn, Matplotlib, Seaborn, Plotly
+- **Framework**: Streamlit for interactive web application
+- **Visualization**: Static and interactive charts with Plotly Express
 
-## 💼 Business Impact & Stakeholder Value
+## Technical Skills Demonstrated
 
-### 👥 **Executive Reporting**
-- **CEO-Level Insights**: Strategic growth metrics, market expansion opportunities
-- **Sales Director Analytics**: Channel performance, fulfillment optimization
-- **Financial Analysis**: Profitability insights, cost optimization opportunities
+### Data Analysis
+- **Python**: Pandas, NumPy for data manipulation and cleaning
+- **Statistical Analysis**: Descriptive statistics, distribution analysis
+- **Data Cleaning**: Handling missing values, duplicates, type conversion
+- **Feature Engineering**: Creating features for predictive modeling
 
-### 📋 **Deliverables**
-- **Comprehensive Analysis**: End-to-end data processing pipeline
-- **Interactive Dashboards**: Real-time business intelligence
-- **Predictive Models**: Revenue forecasting capabilities
-- **Executive Summaries**: Actionable business recommendations
+### Machine Learning
+- **Supervised Learning**: Logistic Regression for classification
+- **Model Evaluation**: Accuracy, precision, recall, F1, ROC-AUC
+- **Feature Importance**: Model coefficient analysis
+- **Prediction Interface**: Real-time classification in Streamlit
 
-## 🛠️ Technical Skills Demonstrated
+### Data Visualization
+- **Interactive Dashboards**: Streamlit-based web application
+- **Business Intelligence**: KPI tracking with date filtering
+- **Exploratory Charts**: Time series, bar charts, pie charts, maps
 
-### 📊 **Data Analysis**
-- **Python**: Pandas, NumPy for data manipulation
-- **Statistical Analysis**: Descriptive statistics, hypothesis testing
-- **Data Cleaning**: Advanced preprocessing techniques
-- **Feature Engineering**: Creating meaningful business features
+## Project Highlights
 
-### 🤖 **Machine Learning**
-- **Supervised Learning**: Linear regression implementation
-- **Model Evaluation**: Performance metrics and validation
-- **Feature Importance**: Understanding model drivers
-- **Prediction Systems**: Real-time forecasting interfaces
-
-### 📈 **Data Visualization**
-- **Static Visualizations**: Publication-quality charts and graphs
-- **Interactive Dashboards**: Streamlit-based web applications
-- **Business Intelligence**: KPI tracking and monitoring
-- **Storytelling**: Data-driven narrative development
-
-## 🎯 **Project Highlights**
-
-### 📊 **Scale & Complexity**
+### Scale
 - **128,975+ transactions** analyzed
-- **7+ datasets** integrated and cleaned
-- **Multi-dimensional analysis** across time, geography, products
-- **Real-time processing** with interactive filtering
+- **7+ datasets** explored and documented
+- **Multi-dimensional analysis** across time, geography, and products
+- **Interactive filtering** for dynamic exploration
 
-### 💡 **Business Insights**
-- **Identified top revenue drivers** and growth opportunities
-- **Quantified customer behavior** patterns
-- **Optimized product mix** recommendations
-- **Geographic expansion** strategies based on data
+### Business Insights
+- **Revenue drivers** identified by category and geography
+- **Customer patterns** analyzed by B2B vs B2C segments
+- **Cancellation risk** model for operational intervention
+- **Monthly trends** for sales planning and forecasting
 
-### 🚀 **Innovation**
-- **ML-powered predictions** for revenue forecasting
-- **Interactive dashboards** for stakeholder engagement
-- **Automated data pipeline** for continuous analysis
-- **Scalable architecture** for business growth
+### Technical Scope
+- **ML classifier** for order cancellation prediction
+- **Interactive dashboard** for stakeholder self-service
+- **Automated data pipeline** in the Streamlit app
+- **Reproducible analysis** in Jupyter notebooks
 
-## 📞 **Contact for Business Inquiries**
+## Contact
 
-This project demonstrates expertise in:
+This project demonstrates proficiency in:
 - **Business Intelligence & Analytics**
 - **Machine Learning & Predictive Modeling**
 - **Data Visualization & Dashboard Development**
-- **E-commerce Domain Knowledge**
+- **E-commerce Domain Analysis**
 
-*Available for consulting projects and full-time opportunities in data analytics and business intelligence roles.*
+*Available for consulting and full-time opportunities in data analytics and business intelligence roles.*
