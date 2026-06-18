@@ -334,16 +334,13 @@ def get_param_grids() -> Dict[str, Dict[str, List[Any]]]:
     """
     return {
         'Logistic Regression': {
-            'C': [0.1, 1.0, 10.0],
-            'penalty': ['l2'],
+            'C': [0.1, 1.0],
         },
         'Random Forest': {
-            'n_estimators': [50, 100],
-            'max_depth': [5, 10, None],
+            'max_depth': [10, None],
             'min_samples_split': [2, 5],
         },
         'Gradient Boosting': {
-            'n_estimators': [50, 100],
             'learning_rate': [0.05, 0.1],
             'max_depth': [3, 5],
         },
@@ -372,13 +369,25 @@ def train_and_evaluate(
         dict with keys: model, best_params, accuracy, precision, recall, f1,
         roc_auc, y_pred, y_prob, report
     """
-    if param_grid:
-        search = GridSearchCV(
-            model, param_grid, cv=3, scoring='roc_auc', n_jobs=-1, verbose=0
-        )
-        search.fit(X_train, y_train)
-        best_model = search.best_estimator_
-        best_params = search.best_params_
+    # Guard against inf/nan in input (can crash sklearn)
+    X_train = X_train.replace([np.inf, -np.inf], np.nan).fillna(0)
+    X_test = X_test.replace([np.inf, -np.inf], np.nan).fillna(0)
+
+    scaler = StandardScaler()
+    X_train = pd.DataFrame(scaler.fit_transform(X_train), columns=X_train.columns, index=X_train.index)
+    X_test = pd.DataFrame(scaler.transform(X_test), columns=X_test.columns, index=X_test.index)
+
+    if param_grid and y_train.nunique() > 1:
+        try:
+            search = GridSearchCV(
+                model, param_grid, cv=3, scoring='f1', n_jobs=-1, verbose=0
+            )
+            search.fit(X_train, y_train)
+            best_model = search.best_estimator_
+            best_params = search.best_params_
+        except ValueError:
+            best_model = model.fit(X_train, y_train)
+            best_params = {}
     else:
         best_model = model.fit(X_train, y_train)
         best_params = {}

@@ -11,6 +11,7 @@ import plotly.express as px
 import requests
 import streamlit as st
 from sklearn.model_selection import train_test_split
+from sklearn.preprocessing import StandardScaler
 
 from utils import (
     SQL_QUERIES,
@@ -297,6 +298,9 @@ def train_models() -> Dict[str, object]:
     X = X[valid]
     y = target[valid].astype(int)
 
+    scaler = StandardScaler()
+    X = pd.DataFrame(scaler.fit_transform(X), columns=X.columns, index=X.index)
+
     if y.nunique() < 2:
         return {'error': 'Not enough class variation in filtered data.'}
 
@@ -413,7 +417,7 @@ def render_bi_dashboard(filtered: pd.DataFrame, full_data: pd.DataFrame) -> None
             font_color=TEXT_SECONDARY, title_font_color=TEXT_PRIMARY,
             title_font_size=14, margin=dict(t=40, b=10, l=10, r=10),
         )
-        st.plotly_chart(fig, use_container_width=True, config={'displayModeBar': False})
+        st.plotly_chart(fig, width='stretch', config={'displayModeBar': False})
 
     with c2:
         cats = filtered.groupby('Category')['Amount'].sum().sort_values(ascending=False).head(10)
@@ -429,7 +433,7 @@ def render_bi_dashboard(filtered: pd.DataFrame, full_data: pd.DataFrame) -> None
             title_font_size=14, margin=dict(t=40, b=10, l=10, r=10),
             xaxis_tickangle=-30,
         )
-        st.plotly_chart(fig, use_container_width=True, config={'displayModeBar': False})
+        st.plotly_chart(fig, width='stretch', config={'displayModeBar': False})
 
     c1, c2 = st.columns(2)
     with c1:
@@ -446,7 +450,7 @@ def render_bi_dashboard(filtered: pd.DataFrame, full_data: pd.DataFrame) -> None
             title_font_size=14, margin=dict(t=40, b=10, l=10, r=10),
             xaxis_tickangle=-30,
         )
-        st.plotly_chart(fig, use_container_width=True, config={'displayModeBar': False})
+        st.plotly_chart(fig, width='stretch', config={'displayModeBar': False})
 
     with c2:
         status_dist = filtered['Status'].value_counts()
@@ -461,7 +465,7 @@ def render_bi_dashboard(filtered: pd.DataFrame, full_data: pd.DataFrame) -> None
             font_color=TEXT_SECONDARY, title_font_color=TEXT_PRIMARY,
             title_font_size=14, margin=dict(t=40, b=10, l=10, r=10),
         )
-        st.plotly_chart(fig, use_container_width=True, config={'displayModeBar': False})
+        st.plotly_chart(fig, width='stretch', config={'displayModeBar': False})
 
     st.markdown('<hr class="divider" />', unsafe_allow_html=True)
     st.markdown('<div class="section-title">Hypothesis Testing</div>', unsafe_allow_html=True)
@@ -518,7 +522,7 @@ def render_segmentation() -> None:
             'Avg_Monetary': '\u20b9{:.0f}',
             'Total_Revenue': '\u20b9{:.0f}',
         }),
-        use_container_width=True,
+        width='stretch',
     )
 
     fig = px.scatter_3d(
@@ -537,7 +541,7 @@ def render_segmentation() -> None:
         legend=dict(font=dict(size=10)),
     )
     fig.update_traces(marker=dict(size=3))
-    st.plotly_chart(fig, use_container_width=True, config={'displayModeBar': False})
+    st.plotly_chart(fig, width='stretch', config={'displayModeBar': False})
 
     c1, c2 = st.columns(2)
     with c1:
@@ -557,7 +561,7 @@ def render_segmentation() -> None:
             title_font_size=14, margin=dict(t=40, b=10, l=10, r=10),
             legend=dict(font=dict(size=10)),
         )
-        st.plotly_chart(fig, use_container_width=True, config={'displayModeBar': False})
+        st.plotly_chart(fig, width='stretch', config={'displayModeBar': False})
 
     with c2:
         seg_customers['Revenue_Share'] = (
@@ -575,7 +579,7 @@ def render_segmentation() -> None:
             title_font_size=14, margin=dict(t=40, b=10, l=10, r=10),
             legend=dict(font=dict(size=10)),
         )
-        st.plotly_chart(fig, use_container_width=True, config={'displayModeBar': False})
+        st.plotly_chart(fig, width='stretch', config={'displayModeBar': False})
 
     st.markdown('<hr class="divider" />', unsafe_allow_html=True)
     st.markdown('<div class="subsection-title">Strategic Recommendations</div>', unsafe_allow_html=True)
@@ -620,7 +624,7 @@ def render_ml_comparison() -> None:
             'Accuracy': '{:.2%}', 'Precision': '{:.2%}', 'Recall': '{:.2%}',
             'F1': '{:.2%}', 'ROC-AUC': '{:.3f}',
         }),
-        use_container_width=True,
+        width='stretch',
     )
 
     melted = results_df.melt(
@@ -639,7 +643,7 @@ def render_ml_comparison() -> None:
         title_font_size=14, margin=dict(t=40, b=10, l=10, r=10),
         legend=dict(font=dict(size=10)),
     )
-    st.plotly_chart(fig, use_container_width=True, config={'displayModeBar': False})
+    st.plotly_chart(fig, width='stretch', config={'displayModeBar': False})
 
     best_name = results_df.iloc[0]['Model']
     best_auc = results_df.iloc[0]['ROC-AUC']
@@ -664,7 +668,7 @@ def render_ml_comparison() -> None:
             title_font_size=14, margin=dict(t=40, b=10, l=10, r=10),
             yaxis=dict(autorange='reversed'),
         )
-        st.plotly_chart(fig, use_container_width=True, config={'displayModeBar': False})
+        st.plotly_chart(fig, width='stretch', config={'displayModeBar': False})
 
     st.markdown('<hr class="divider" />', unsafe_allow_html=True)
     st.markdown('<div class="subsection-title">Live Prediction</div>', unsafe_allow_html=True)
@@ -756,7 +760,7 @@ def render_sql_analysis() -> None:
 
     if st.button("Execute Query"):
         result = pd.read_sql_query(query, conn)
-        st.dataframe(result, use_container_width=True)
+        st.dataframe(result, width='stretch')
         st.download_button(
             "Download Results (CSV)",
             result.to_csv(index=False),
@@ -769,7 +773,7 @@ def render_sql_analysis() -> None:
         if custom_query and st.button("Run Custom"):
             try:
                 result = pd.read_sql_query(custom_query, conn)
-                st.dataframe(result, use_container_width=True)
+                st.dataframe(result, width='stretch')
             except Exception as e:
                 st.error(f"Query error: {e}")
 
@@ -817,11 +821,11 @@ def render_data_explorer(dfs: Dict[str, pd.DataFrame]) -> None:
             unsafe_allow_html=True,
         )
 
-    st.dataframe(df.head(20), use_container_width=True)
+    st.dataframe(df.head(20), width='stretch')
 
     if st.checkbox("Show Summary Statistics"):
         stats_df = df.describe(include='all').transpose().reset_index()
-        st.dataframe(stats_df, use_container_width=True)
+        st.dataframe(stats_df, width='stretch')
 
 
 def render_api_playground() -> None:
