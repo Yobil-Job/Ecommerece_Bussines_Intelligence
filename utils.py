@@ -376,6 +376,8 @@ def train_and_evaluate(
     scaler = StandardScaler()
     X_train = pd.DataFrame(scaler.fit_transform(X_train), columns=X_train.columns, index=X_train.index)
     X_test = pd.DataFrame(scaler.transform(X_test), columns=X_test.columns, index=X_test.index)
+    X_train = X_train.replace([np.inf, -np.inf], np.nan).fillna(0)
+    X_test = X_test.replace([np.inf, -np.inf], np.nan).fillna(0)
 
     if param_grid and y_train.nunique() > 1:
         try:

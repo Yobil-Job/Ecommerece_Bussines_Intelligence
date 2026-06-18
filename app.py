@@ -11,7 +11,6 @@ import plotly.express as px
 import requests
 import streamlit as st
 from sklearn.model_selection import train_test_split
-from sklearn.preprocessing import StandardScaler
 
 from utils import (
     SQL_QUERIES,
@@ -297,9 +296,6 @@ def train_models() -> Dict[str, object]:
     valid = target.notna() & X.notna().all(axis=1)
     X = X[valid]
     y = target[valid].astype(int)
-
-    scaler = StandardScaler()
-    X = pd.DataFrame(scaler.fit_transform(X), columns=X.columns, index=X.index)
 
     if y.nunique() < 2:
         return {'error': 'Not enough class variation in filtered data.'}
