@@ -63,6 +63,9 @@ https://ecommerecebussinesintelligence.streamlit.app/
 ├── utils.py                  # Core utilities (data loading, features, models, stats)
 ├── tests/
 │   └── test_analysis.py      # Unit tests for analysis functions
+├── api.py                    # FastAPI prediction service with API key auth
+├── .env.example              # Template for API key configuration
+├── api_requirements.txt      # Dependencies for the API service
 ├── requirements.txt          # Production dependencies
 ├── requirements_minimal.txt  # Minimal dependencies for deployment
 └── .gitignore
@@ -94,6 +97,30 @@ streamlit run app.py
 
 # Run tests
 pytest tests/
+
+# Run the API service (separate terminal)
+cp .env.example .env        # Edit .env with your API key
+pip install -r api_requirements.txt
+uvicorn api:app --reload     # Swagger docs at http://localhost:8000/docs
+```
+
+## API Service
+
+A **FastAPI** service wraps the cancellation prediction model with API key authentication:
+
+| Endpoint | Method | Description | Auth Required |
+|----------|--------|-------------|---------------|
+| `/` | GET | Health check | No |
+| `/predict` | POST | Predict cancellation risk | Yes (X-API-Key header) |
+| `/model-info` | GET | Get model metadata | Yes (X-API-Key header) |
+
+### Example Usage
+
+```bash
+curl -X POST http://localhost:8000/predict \
+  -H "X-API-Key: your-secret-key" \
+  -H "Content-Type: application/json" \
+  -d '{"Month": 6, "Qty": 2, "Amount": 1500, "Fulfilment": "Amazon", "ServiceLevel": "Standard", "B2B": false, "Category": "Set"}'
 ```
 
 ## Contact
