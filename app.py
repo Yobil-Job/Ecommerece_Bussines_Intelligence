@@ -417,7 +417,7 @@ def render_bi_dashboard(filtered: pd.DataFrame, full_data: pd.DataFrame) -> None
             font_color=TEXT_SECONDARY, title_font_color=TEXT_PRIMARY,
             title_font_size=14, margin=dict(t=40, b=10, l=10, r=10),
         )
-        st.plotly_chart(fig, width='stretch', config={'displayModeBar': False})
+        st.plotly_chart(fig, use_container_width=True, config={'displayModeBar': False})
 
     with c2:
         cats = filtered.groupby('Category')['Amount'].sum().sort_values(ascending=False).head(10)
@@ -433,7 +433,7 @@ def render_bi_dashboard(filtered: pd.DataFrame, full_data: pd.DataFrame) -> None
             title_font_size=14, margin=dict(t=40, b=10, l=10, r=10),
             xaxis_tickangle=-30,
         )
-        st.plotly_chart(fig, width='stretch', config={'displayModeBar': False})
+        st.plotly_chart(fig, use_container_width=True, config={'displayModeBar': False})
 
     c1, c2 = st.columns(2)
     with c1:
@@ -450,7 +450,7 @@ def render_bi_dashboard(filtered: pd.DataFrame, full_data: pd.DataFrame) -> None
             title_font_size=14, margin=dict(t=40, b=10, l=10, r=10),
             xaxis_tickangle=-30,
         )
-        st.plotly_chart(fig, width='stretch', config={'displayModeBar': False})
+        st.plotly_chart(fig, use_container_width=True, config={'displayModeBar': False})
 
     with c2:
         status_dist = filtered['Status'].value_counts()
@@ -465,7 +465,7 @@ def render_bi_dashboard(filtered: pd.DataFrame, full_data: pd.DataFrame) -> None
             font_color=TEXT_SECONDARY, title_font_color=TEXT_PRIMARY,
             title_font_size=14, margin=dict(t=40, b=10, l=10, r=10),
         )
-        st.plotly_chart(fig, width='stretch', config={'displayModeBar': False})
+        st.plotly_chart(fig, use_container_width=True, config={'displayModeBar': False})
 
     st.markdown('<hr class="divider" />', unsafe_allow_html=True)
     st.markdown('<div class="section-title">Hypothesis Testing</div>', unsafe_allow_html=True)
@@ -541,7 +541,7 @@ def render_segmentation() -> None:
         legend=dict(font=dict(size=10)),
     )
     fig.update_traces(marker=dict(size=3))
-    st.plotly_chart(fig, width='stretch', config={'displayModeBar': False})
+    st.plotly_chart(fig, use_container_width=True, config={'displayModeBar': False})
 
     c1, c2 = st.columns(2)
     with c1:
@@ -561,7 +561,7 @@ def render_segmentation() -> None:
             title_font_size=14, margin=dict(t=40, b=10, l=10, r=10),
             legend=dict(font=dict(size=10)),
         )
-        st.plotly_chart(fig, width='stretch', config={'displayModeBar': False})
+        st.plotly_chart(fig, use_container_width=True, config={'displayModeBar': False})
 
     with c2:
         seg_customers['Revenue_Share'] = (
@@ -579,7 +579,7 @@ def render_segmentation() -> None:
             title_font_size=14, margin=dict(t=40, b=10, l=10, r=10),
             legend=dict(font=dict(size=10)),
         )
-        st.plotly_chart(fig, width='stretch', config={'displayModeBar': False})
+        st.plotly_chart(fig, use_container_width=True, config={'displayModeBar': False})
 
     st.markdown('<hr class="divider" />', unsafe_allow_html=True)
     st.markdown('<div class="subsection-title">Strategic Recommendations</div>', unsafe_allow_html=True)
@@ -643,7 +643,7 @@ def render_ml_comparison() -> None:
         title_font_size=14, margin=dict(t=40, b=10, l=10, r=10),
         legend=dict(font=dict(size=10)),
     )
-    st.plotly_chart(fig, width='stretch', config={'displayModeBar': False})
+    st.plotly_chart(fig, use_container_width=True, config={'displayModeBar': False})
 
     best_name = results_df.iloc[0]['Model']
     best_auc = results_df.iloc[0]['ROC-AUC']
@@ -668,7 +668,7 @@ def render_ml_comparison() -> None:
             title_font_size=14, margin=dict(t=40, b=10, l=10, r=10),
             yaxis=dict(autorange='reversed'),
         )
-        st.plotly_chart(fig, width='stretch', config={'displayModeBar': False})
+        st.plotly_chart(fig, use_container_width=True, config={'displayModeBar': False})
 
     st.markdown('<hr class="divider" />', unsafe_allow_html=True)
     st.markdown('<div class="subsection-title">Live Prediction</div>', unsafe_allow_html=True)
