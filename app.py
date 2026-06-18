@@ -280,14 +280,18 @@ def train_models() -> Dict[str, object]:
                     'HasPromotion', 'IsHighValue', 'Revenue_7d_MA']
     cat_cols = ['Fulfilment', 'ship-service-level', 'B2B']
 
-    available = [c for c in numeric_cols + cat_cols if c in fe.columns]
-    X = fe[available].copy()
-    for c in cat_cols:
-        if c in X.columns:
-            X[c] = X[c].astype(str)
-    for c in numeric_cols:
-        if c in X.columns:
-            X[c] = pd.to_numeric(X[c], errors='coerce').fillna(0)
+    available_nums = [c for c in numeric_cols if c in fe.columns]
+    available_cats = [c for c in cat_cols if c in fe.columns]
+
+    X_nums = fe[available_nums].copy()
+    for c in available_nums:
+        X_nums[c] = pd.to_numeric(X_nums[c], errors='coerce').fillna(0)
+
+    X_cats = fe[available_cats].astype(str) if available_cats else pd.DataFrame()
+    X_cats_enc = pd.get_dummies(X_cats, prefix_sep='_') if not X_cats.empty else pd.DataFrame()
+
+    X = pd.concat([X_nums, X_cats_enc], axis=1)
+    all_features = list(X.columns)
 
     valid = target.notna() & X.notna().all(axis=1)
     X = X[valid]
@@ -314,7 +318,7 @@ def train_models() -> Dict[str, object]:
         'results_df': results_df,
         'best_model': best_result['model'],
         'best_metrics': best_result,
-        'feature_importance': _get_feature_importance(best_result['model'], numeric_cols, cat_cols),
+        'feature_importance': _get_feature_importance(best_result['model'], all_features),
         'X_train': X_train,
         'X_test': X_test,
         'y_train': y_train,
@@ -323,19 +327,28 @@ def train_models() -> Dict[str, object]:
 
 
 def _get_feature_importance(
-    model: object, num_cols: List[str], cat_cols: List[str]
+    model: object, feature_names: List[str]
 ) -> pd.DataFrame:
-    """Extract feature importance or coefficients from a trained model."""
+    """Extract feature importance or coefficients from a trained model.
+
+    Args:
+        model: trained sklearn estimator with coef_ or feature_importances_.
+        feature_names: list of column names used during training.
+
+    Returns:
+        DataFrame sorted by absolute importance, or empty if not available.
+    """
     if hasattr(model, 'coef_'):
         coefs = model.coef_[0]
-        names = num_cols + cat_cols
-        return pd.DataFrame({'Feature': names[:len(coefs)], 'Importance': coefs}).sort_values(
-            'Importance', ascending=False
-        )
-    if hasattr(model, 'feature_importances_'):
-        names = num_cols + cat_cols
+        names = feature_names[:len(coefs)]
         return pd.DataFrame({
-            'Feature': names[:len(model.feature_importances_)],
+            'Feature': names,
+            'Importance': coefs,
+        }).sort_values('Importance', ascending=False)
+    if hasattr(model, 'feature_importances_'):
+        names = feature_names[:len(model.feature_importances_)]
+        return pd.DataFrame({
+            'Feature': names,
             'Importance': model.feature_importances_,
         }).sort_values('Importance', ascending=False)
     return pd.DataFrame()

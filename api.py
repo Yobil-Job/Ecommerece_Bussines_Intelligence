@@ -141,11 +141,18 @@ def _load_model() -> None:
     ]
     cat_cols = ["Fulfilment", "ship-service-level", "B2B"]
 
-    X = fe[numeric_cols + cat_cols].copy()
-    for c in cat_cols:
-        X[c] = X[c].astype(str)
-    for c in numeric_cols:
-        X[c] = pd.to_numeric(X[c], errors="coerce").fillna(0)
+    available_nums = [c for c in numeric_cols if c in fe.columns]
+    available_cats = [c for c in cat_cols if c in fe.columns]
+
+    X_nums = fe[available_nums].copy()
+    for c in available_nums:
+        X_nums[c] = pd.to_numeric(X_nums[c], errors="coerce").fillna(0)
+
+    X_cats = fe[available_cats].astype(str) if available_cats else pd.DataFrame()
+    X_cats_enc = pd.get_dummies(X_cats, prefix_sep="_") if not X_cats.empty else pd.DataFrame()
+
+    X = pd.concat([X_nums, X_cats_enc], axis=1)
+    all_features = list(X.columns)
 
     valid = target.notna() & X.notna().all(axis=1)
     X = X[valid]
@@ -164,10 +171,10 @@ def _load_model() -> None:
         classifiers[best_name], X_train, y_train, X_test, y_test, grids.get(best_name)
     )
 
-    save_model_pipeline(result["model"], build_preprocessor(), numeric_cols + cat_cols, MODEL_PATH)
+    save_model_pipeline(result["model"], build_preprocessor(), all_features, MODEL_PATH)
 
     app.state.model = result["model"]
-    app.state.features = numeric_cols + cat_cols
+    app.state.features = all_features
     app.state.metrics = {
         "accuracy": result["accuracy"],
         "precision": result["precision"],
@@ -226,10 +233,22 @@ def predict(
         "ship-service-level": input_data.ServiceLevel,
         "B2B": "True" if input_data.B2B else "False",
     }])
-    for c in ["Fulfilment", "ship-service-level", "B2B"]:
-        inp[c] = inp[c].astype(str)
 
-    prob = app.state.model.predict_proba(inp)[0, 1]
+    # One-hot encode categorical columns, align to training feature names
+    cat_cols = ["Fulfilment", "ship-service-level", "B2B"]
+    inp_cats = inp[cat_cols].astype(str)
+    if not inp_cats.empty:
+        inp_cats_enc = pd.get_dummies(inp_cats, prefix_sep="_")
+    else:
+        inp_cats_enc = pd.DataFrame()
+    inp_nums = inp.drop(columns=cat_cols, errors="ignore")
+    inp_enc = pd.concat([inp_nums, inp_cats_enc], axis=1)
+    for col in app.state.features:
+        if col not in inp_enc.columns:
+            inp_enc[col] = 0
+    inp_enc = inp_enc[app.state.features]
+
+    prob = app.state.model.predict_proba(inp_enc)[0, 1]
 
     if prob < 0.3:
         risk = "Low"
