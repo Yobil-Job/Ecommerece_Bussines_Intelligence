@@ -315,7 +315,7 @@ def get_classifiers() -> Dict[str, BaseEstimator]:
     """
     return {
         'Logistic Regression': LogisticRegression(
-            max_iter=1000, class_weight='balanced', random_state=42
+            max_iter=2000, class_weight='balanced', random_state=42
         ),
         'Random Forest': RandomForestClassifier(
             n_estimators=100, class_weight='balanced', random_state=42, n_jobs=-1
