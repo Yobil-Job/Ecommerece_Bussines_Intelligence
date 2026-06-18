@@ -70,6 +70,7 @@ def load_data():
     expenses = pd.read_csv('Expense IIGF.csv')
     inventory = pd.read_csv('Sale Report.csv')
 
+    amazon_sales.columns = amazon_sales.columns.str.strip()
     amazon_sales = amazon_sales.drop(columns=['Unnamed: 22', 'index'], errors='ignore')
     amazon_sales = amazon_sales.dropna(subset=['Amount'])
     amazon_sales = amazon_sales.drop_duplicates()
