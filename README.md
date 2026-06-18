@@ -1,105 +1,103 @@
-# E-commerce Business Intelligence Portfolio Project
+# E-commerce Business Intelligence
+
+[![Streamlit App](https://static.streamlit.io/badges/streamlit_badge_black_white.svg)](https://ecommerecebussinesintelligence.streamlit.app/)
+
+A production-grade **Business Intelligence and Machine Learning** portfolio project demonstrating data analysis, predictive modeling, customer segmentation, and interactive dashboards using real-world e-commerce data from Amazon India.
 
 ## Live Demo
+
 https://ecommerecebussinesintelligence.streamlit.app/
 
-## Project Overview
+---
 
-A data analysis and business intelligence project demonstrating skills in data cleaning, exploratory analysis, visualization, and predictive modeling using real-world e-commerce data from Amazon India.
+## Features
 
-## Data Analysis & Business Intelligence
+### Business Intelligence Dashboard
+- **Revenue analysis** with monthly trends, category breakdowns, and geographic distribution
+- **Statistical hypothesis testing** (Welch's t-test for B2B vs B2C AOV, chi-square for fulfillment vs cancellation)
+- **KPI tracking** with date-range filtering: Total Revenue, Orders, AOV, Cancellation Rate
+- **Dataset joins** — sales transactions merged with inventory data
 
-### Exploratory Data Analysis (EDA)
-- **Multi-dataset Exploration**: Examined 7+ CSV files (~128K transactions)
-- **Data Cleaning**: Handled missing values, duplicates, and data type conversions
-- **Statistical Analysis**: Descriptive statistics and correlation analysis
-- **Data Quality Assessment**: Identified data integrity issues across datasets
+### Customer Segmentation (RFM + K-means)
+- **Recency, Frequency, Monetary** (RFM) analysis per customer
+- **K-means clustering** on log-transformed RFM values with automated segment labeling
+- **3D visualization** of customer segments
+- **Actionable insights** for each segment (Champions, Loyal, At Risk, Big Spenders)
 
-### Key Business Insights
-- **Revenue Analysis**: Total revenue of ₹78.6M across the analysis period
-- **Customer Segmentation**: B2B vs B2C performance comparison
-- **Geographic Distribution**: Top-performing states (Maharashtra ₹13.3M, Karnataka ₹10.5M)
-- **Product Performance**: Category analysis showing Sets as the top revenue driver
-- **Temporal Patterns**: Monthly revenue trends and seasonality
-- **Operational Metrics**: ~8.8% cancellation rate analysis
+### ML Model Comparison
+- **3 classifiers** compared with GridSearchCV hyperparameter tuning:
+  - Logistic Regression
+  - Random Forest
+  - Gradient Boosting
+- **Production-grade pipeline** using `sklearn.Pipeline` + `ColumnTransformer`
+- **Full metrics**: Accuracy, Precision, Recall, F1, ROC-AUC
+- **Feature importance** analysis and interactive cancellation risk prediction
 
-### KPI Development
-- **Executive Dashboards**: Revenue, Orders, AOV, Cancellation Rate tracking
-- **Growth Metrics**: Month-over-month revenue growth analysis
-- **Customer Analytics**: B2B/B2C segmentation
+### SQL Analysis
+- **In-memory SQLite database** populated from CSV data
+- **Pre-built analytical queries** (revenue by category, monthly trends, cancellation rates)
+- **Custom SQL editor** for ad-hoc exploration
+- **CSV export** for query results
 
-## Machine Learning & Predictive Analytics
+### Data Explorer
+- Browse all 5 datasets with row/column statistics
+- Preview data and summary statistics
 
-### Predictive Modeling
-- **Order Cancellation Classifier**: Logistic Regression model to predict whether an order is likely to be cancelled
-- **Feature Engineering**: Temporal features (month, day of week), categorical encoding, and business features
-- **Model Evaluation**: Accuracy, precision, recall, F1-score, and ROC-AUC metrics with train/test validation
-- **Business Application**: Early identification of at-risk orders for intervention
+## Technical Stack
 
-### ML Pipeline
-- **Data Preprocessing**: Feature selection, encoding, and scaling
-- **Model Training**: Supervised classification with scikit-learn
-- **Performance Metrics**: Full classification report with cross-validation
-- **Interactive Interface**: Real-time cancellation risk prediction
+| Layer | Technology |
+|-------|-----------|
+| **Frontend** | Streamlit (interactive dashboard) |
+| **Data Processing** | Pandas, NumPy, scikit-learn |
+| **Machine Learning** | Logistic Regression, Random Forest, Gradient Boosting + GridSearchCV |
+| **Statistics** | SciPy (t-tests, chi-square) |
+| **Database** | SQLite (in-memory analytical queries) |
+| **Visualization** | Plotly Express (interactive charts), Streamlit native |
+| **Testing** | Pytest |
+| **Model Persistence** | Joblib |
 
-## Data Visualization
+## Project Structure
 
-### Visualizations
-- **Time Series Analysis**: Monthly revenue trends with growth rates
-- **Geographic Analysis**: State-wise revenue distribution
-- **Categorical Analysis**: Top products, categories, and order status distributions
-- **Interactive Dashboards**: Real-time filtering with Streamlit
+```
+├── app.py                    # Main Streamlit application
+├── utils.py                  # Core utilities (data loading, features, models, stats)
+├── tests/
+│   └── test_analysis.py      # Unit tests for analysis functions
+├── requirements.txt          # Production dependencies
+├── requirements_minimal.txt  # Minimal dependencies for deployment
+└── .gitignore
+```
 
-### Technologies & Tools
-- **Libraries**: Pandas, NumPy, Scikit-learn, Matplotlib, Seaborn, Plotly
-- **Framework**: Streamlit for interactive web application
-- **Visualization**: Static and interactive charts with Plotly Express
+## Key Skills Demonstrated
 
-## Technical Skills Demonstrated
+- **Data Engineering**: Multi-dataset loading, cleaning, joining, type conversion
+- **Feature Engineering**: Temporal features, price-per-unit, rolling averages, promotion flags
+- **Machine Learning**: Pipeline construction, cross-validation, hyperparameter tuning, model comparison
+- **Statistics**: Hypothesis testing, distribution analysis
+- **Customer Analytics**: RFM analysis, K-means clustering, segment profiling
+- **SQL**: Analytical queries, data aggregation, in-memory database
+- **Software Engineering**: Modular code, type hints, unit testing, git version control
+- **Deployment**: Streamlit Cloud, environment management
 
-### Data Analysis
-- **Python**: Pandas, NumPy for data manipulation and cleaning
-- **Statistical Analysis**: Descriptive statistics, distribution analysis
-- **Data Cleaning**: Handling missing values, duplicates, type conversion
-- **Feature Engineering**: Creating features for predictive modeling
+## Getting Started
 
-### Machine Learning
-- **Supervised Learning**: Logistic Regression for classification
-- **Model Evaluation**: Accuracy, precision, recall, F1, ROC-AUC
-- **Feature Importance**: Model coefficient analysis
-- **Prediction Interface**: Real-time classification in Streamlit
+```bash
+# Clone the repo
+git clone https://github.com/Yobil-Job/Ecommerece_Bussines_Intelligence.git
+cd Ecommerece_Bussines_Intelligence
 
-### Data Visualization
-- **Interactive Dashboards**: Streamlit-based web application
-- **Business Intelligence**: KPI tracking with date filtering
-- **Exploratory Charts**: Time series, bar charts, pie charts, maps
+# Install dependencies
+pip install -r requirements.txt
 
-## Project Highlights
+# Run the app
+streamlit run app.py
 
-### Scale
-- **128,975+ transactions** analyzed
-- **7+ datasets** explored and documented
-- **Multi-dimensional analysis** across time, geography, and products
-- **Interactive filtering** for dynamic exploration
-
-### Business Insights
-- **Revenue drivers** identified by category and geography
-- **Customer patterns** analyzed by B2B vs B2C segments
-- **Cancellation risk** model for operational intervention
-- **Monthly trends** for sales planning and forecasting
-
-### Technical Scope
-- **ML classifier** for order cancellation prediction
-- **Interactive dashboard** for stakeholder self-service
-- **Automated data pipeline** in the Streamlit app
-- **Reproducible analysis** in Jupyter notebooks
+# Run tests
+pytest tests/
+```
 
 ## Contact
 
-This project demonstrates proficiency in:
-- **Business Intelligence & Analytics**
-- **Machine Learning & Predictive Modeling**
-- **Data Visualization & Dashboard Development**
-- **E-commerce Domain Analysis**
+Available for consulting and full-time roles in **Data Analytics**, **Business Intelligence**, and **Machine Learning**.
 
-*Available for consulting and full-time opportunities in data analytics and business intelligence roles.*
+*Built with Python, Streamlit, scikit-learn, and love for data.*
