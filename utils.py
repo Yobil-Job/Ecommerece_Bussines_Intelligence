@@ -118,6 +118,7 @@ def engineer_features(df: pd.DataFrame) -> pd.DataFrame:
     fe = df.copy()
     fe['DayOfWeek'] = fe['Date'].dt.dayofweek
     fe['IsWeekend'] = fe['DayOfWeek'].isin([5, 6]).astype(int)
+    fe['Month'] = fe['Date'].dt.month
     fe['PricePerUnit'] = np.where(fe['Qty'] > 0, fe['Amount'] / fe['Qty'], 0)
     fe['HasPromotion'] = fe['promotion-ids'].notna().astype(int)
     fe['IsHighValue'] = (fe['Amount'] > fe['Amount'].quantile(0.75)).astype(int)

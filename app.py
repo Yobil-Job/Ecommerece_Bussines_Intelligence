@@ -280,11 +280,14 @@ def train_models() -> Dict[str, object]:
                     'HasPromotion', 'IsHighValue', 'Revenue_7d_MA']
     cat_cols = ['Fulfilment', 'ship-service-level', 'B2B']
 
-    X = fe[numeric_cols + cat_cols].copy()
+    available = [c for c in numeric_cols + cat_cols if c in fe.columns]
+    X = fe[available].copy()
     for c in cat_cols:
-        X[c] = X[c].astype(str)
+        if c in X.columns:
+            X[c] = X[c].astype(str)
     for c in numeric_cols:
-        X[c] = pd.to_numeric(X[c], errors='coerce').fillna(0)
+        if c in X.columns:
+            X[c] = pd.to_numeric(X[c], errors='coerce').fillna(0)
 
     valid = target.notna() & X.notna().all(axis=1)
     X = X[valid]
